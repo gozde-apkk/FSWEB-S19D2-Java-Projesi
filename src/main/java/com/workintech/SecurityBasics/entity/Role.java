@@ -1,17 +1,15 @@
 package com.workintech.SecurityBasics.entity;
 
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "role", schema = "security")
+@Table(name = "role", schema = "secure_app")
 public class Role implements GrantedAuthority {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

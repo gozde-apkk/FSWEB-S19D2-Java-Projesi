@@ -2,43 +2,43 @@ package com.workintech.SecurityBasics.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.management.relation.Role;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "member" , schema = "security")
+@Table(name = "member", schema = "secure_app")
 public class Member implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
     @Column(name = "email")
     private String email;
+
     @Column(name = "password")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "member_role", schema = "security",
-    joinColumns = {@JoinColumn(name = "member_id")},
-    inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    @JoinTable(name = "member_role", schema = "secure_app",
+            joinColumns = {@JoinColumn(name = "member_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    private Set<Role> authorities = new HashSet<>();
 
-    private Set<Role> authorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return (Collection<? extends GrantedAuthority>) authorities;
     }
 
     @Override
